@@ -1,0 +1,56 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "staticSiteName": {
+      "type": "string"
+    },
+    "staticSiteSku": {
+      "type": "string"
+    },
+    "staticSiteSkuCode": {
+      "type": "string"
+    },
+    "staticSiteAppLocation": {
+      "type": "string"
+    },
+    "staticSiteApiLocation": {
+      "type": "string"
+    },
+    "staticSiteAppArtifactLocation": {
+      "type": "string"
+    },
+    "repoUrl": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "repositoryToken": {
+      "type": "securestring"
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2021-01-15",
+      "name": "[parameters('staticSiteName')]",
+      "type": "Microsoft.Web/staticSites",
+      "location": "[parameters('location')]",
+      "properties": {
+        "name": "[parameters('staticSiteName')]",
+        "repositoryUrl": "[parameters('repoUrl')]",
+        "branch": "[parameters('branch')]",
+        "repositoryToken": "[parameters('repositoryToken')]",
+        "buildProperties": {
+          "appLocation": "[parameters('staticSiteAppLocation')]",
+          "apiLocation": "[parameters('staticSiteApiLocation')]",
+          "appArtifactLocation": "[parameters('staticSiteAppArtifactLocation')]"
+        }
+      },
+      "sku": {
+        "Tier": "[parameters('staticSiteSku')]",
+        "Name": "[parameters('staticSiteSkuCode')]"
+      }
+    }
+  ]
+}
